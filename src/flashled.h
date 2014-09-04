@@ -48,6 +48,8 @@ void Flash_LED(void);
 /* Prototype for the function toggling the LEDs */
 void Toggle_LED(void);
 
+void Sequence_LED(void);
+
 /* End of multiple inclusion prevention macro */
 #endif
 

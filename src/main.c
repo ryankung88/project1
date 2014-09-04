@@ -108,10 +108,12 @@ void main(void)
      /* Begins the initial LED flash sequence */
     //Flash_LED();
 
-    for(i = 0; i < 100000; i++)
+    Sequence_LED();
+    /*for(i = 0; i < 100000; i++)
     {
     Toggle_LED();
     }
+    */
     /* Start the timer_adc function */
     //timer_adc();
     
