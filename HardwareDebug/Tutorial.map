@@ -1,4 +1,4 @@
-Optimizing Linkage Editor (V.10.02.00.000)        04-Sep-2014 00:20:56
+Optimizing Linkage Editor (V.10.02.00.000)        04-Sep-2014 17:47:12
 
 *** Options ***
 
@@ -96,7 +96,7 @@ L
 PIntPRG
                                   fffe6000  fffe6090        91   1
 P
-                                  fffe8000  fffe9c56      1c57   1
+                                  fffe8000  fffe9b88      1b89   1
 $ADDR_C_FFFFFF80
                                   ffffff80  ffffff83         4   1
 $ADDR_C_FFFFFF88
@@ -394,205 +394,207 @@ FILE=.\src\r_cg_intprg.obj
 
 SECTION=P
 FILE=.\src\flashled.obj
-                                  fffe8000  fffe8266       267
+                                  fffe8000  fffe81a0       1a1
   _Flash_LED
                                   fffe8000        a2   func ,g         0
   _Toggle_LED
                                   fffe80a2        11   func ,g         2
   _Sequence_LED
-                                  fffe80b3       1b4   func ,g         1
+                                  fffe80b3        c1   func ,g         1
+  _LED_Delay
+                                  fffe8174        2d   func ,g         8
 FILE=.\src\lcd.obj
-                                  fffe8267  fffe8877       611
+                                  fffe81a1  fffe87b1       611
   _Init_LCD
-                                  fffe8267         b   func ,g         1
+                                  fffe81a1         b   func ,g         1
   _Display_LCD
-                                  fffe8272        1d   func ,g         0
+                                  fffe81ac        1d   func ,g         0
   _DisplayStr
-                                  fffe828f        5c   func ,g         2
+                                  fffe81c9        5c   func ,g         2
   _DisplayCenter
-                                  fffe82eb        75   func ,g         2
+                                  fffe8225        75   func ,g         2
   _Clear_Display
-                                  fffe8360         7   func ,g         1
+                                  fffe829a         7   func ,g         1
   _DisplayClearLine
-                                  fffe8367        55   func ,g         0
+                                  fffe82a1        55   func ,g         0
   _DisplaySetCursor
-                                  fffe83bc        41   func ,g         4
+                                  fffe82f6        41   func ,g         4
   _DisplayDelay
-                                  fffe83fd        32   func ,g         2
+                                  fffe8337        32   func ,g         2
   _DisplaySetContrast
-                                  fffe842f        25   func ,g         1
+                                  fffe8369        25   func ,g         1
   _DisplaySetBrightness
-                                  fffe8454        23   func ,g         1
+                                  fffe838e        23   func ,g         1
   _init_pmod_lcd
-                                  fffe8477        cf   func ,l         1
+                                  fffe83b1        cf   func ,l         1
   _charput
-                                  fffe8546       1d9   func ,l         3
+                                  fffe8480       1d9   func ,l         3
   _clr_display
-                                  fffe871f        40   func ,l         1
+                                  fffe8659        40   func ,l         1
   _update_display
-                                  fffe875f        60   func ,l         3
+                                  fffe8699        60   func ,l         3
   _display_write_command
-                                  fffe87bf        5e   func ,l         e
+                                  fffe86f9        5e   func ,l         e
   _display_write_data_block
-                                  fffe881d        5b   func ,l         1
+                                  fffe8757        5b   func ,l         1
 FILE=.\src\main.obj
-                                  fffe8878  fffe88bf        48
+                                  fffe87b2  fffe87f1        40
   _main
-                                  fffe8878        37   func ,g         1
+                                  fffe87b2        2f   func ,g         1
   _R_MAIN_UserInit
-                                  fffe88af        11   func ,g         1
+                                  fffe87e1        11   func ,g         1
 FILE=.\src\r_cg_cgc.obj
-                                  fffe88c0  fffe8996        d7
+                                  fffe87f2  fffe88c8        d7
   _R_CGC_Create
-                                  fffe88c0        d7   func ,g         1
+                                  fffe87f2        d7   func ,g         1
 FILE=.\src\r_cg_cmt.obj
-                                  fffe8997  fffe8afa       164
+                                  fffe88c9  fffe8a2c       164
   _R_CMT0_Create
-                                  fffe8997        5c   func ,g         1
+                                  fffe88c9        5c   func ,g         1
   _R_CMT0_Start
-                                  fffe89f3        28   func ,g         1
+                                  fffe8925        28   func ,g         1
   _R_CMT0_Stop
-                                  fffe8a1b        28   func ,g         1
+                                  fffe894d        28   func ,g         1
   _R_CMT1_Create
-                                  fffe8a43        5e   func ,g         1
+                                  fffe8975        5e   func ,g         1
   _R_CMT1_Start
-                                  fffe8aa1        2d   func ,g         0
+                                  fffe89d3        2d   func ,g         0
   _R_CMT1_Stop
-                                  fffe8ace        2d   func ,g         0
+                                  fffe8a00        2d   func ,g         0
 FILE=.\src\r_cg_cmt_user.obj
-                                  fffe8afb  fffe8ca8       1ae
+                                  fffe8a2d  fffe8bda       1ae
   _r_cmt_cmi0_interrupt
-                                  fffe8afb       163   func ,l         0
+                                  fffe8a2d       163   func ,l         0
   _r_cmt_cmi1_interrupt
-                                  fffe8c5e        4b   func ,l         0
+                                  fffe8b90        4b   func ,l         0
 FILE=.\src\r_cg_hardware_setup.obj
-                                  fffe8ca9  fffe8d19        71
+                                  fffe8bdb  fffe8c4b        71
   _R_Systeminit
-                                  fffe8ca9        6d   func ,g         1
+                                  fffe8bdb        6d   func ,g         1
   _HardwareSetup
-                                  fffe8d16         4   func ,g         1
+                                  fffe8c48         4   func ,g         1
 FILE=.\src\r_cg_icu.obj
-                                  fffe8d1a  fffe8e81       168
+                                  fffe8c4c  fffe8db3       168
   _R_ICU_Create
-                                  fffe8d1a       10e   func ,g         1
+                                  fffe8c4c       10e   func ,g         1
   _R_ICU_IRQ0_Start
-                                  fffe8e28         f   func ,g         1
+                                  fffe8d5a         f   func ,g         1
   _R_ICU_IRQ0_Stop
-                                  fffe8e37         f   func ,g         0
+                                  fffe8d69         f   func ,g         0
   _R_ICU_IRQ1_Start
-                                  fffe8e46         f   func ,g         1
+                                  fffe8d78         f   func ,g         1
   _R_ICU_IRQ1_Stop
-                                  fffe8e55         f   func ,g         0
+                                  fffe8d87         f   func ,g         0
   _R_ICU_IRQ4_Start
-                                  fffe8e64         f   func ,g         1
+                                  fffe8d96         f   func ,g         1
   _R_ICU_IRQ4_Stop
-                                  fffe8e73         f   func ,g         0
+                                  fffe8da5         f   func ,g         0
 FILE=.\src\r_cg_icu_user.obj
-                                  fffe8e82  fffe912e       2ad
+                                  fffe8db4  fffe9060       2ad
   _r_icu_irq0_interrupt
-                                  fffe8e82        d8   func ,l         0
+                                  fffe8db4        d8   func ,l         0
   _r_icu_irq1_interrupt
-                                  fffe8f5a        d8   func ,l         0
+                                  fffe8e8c        d8   func ,l         0
   _r_icu_irq4_interrupt
-                                  fffe9032        d8   func ,l         0
+                                  fffe8f64        d8   func ,l         0
   _start_debounce_timer
-                                  fffe910a        25   func ,l         6
+                                  fffe903c        25   func ,l         6
 FILE=.\src\r_cg_mtu2.obj
-                                  fffe912f  fffe92a5       177
+                                  fffe9061  fffe91d7       177
   _R_MTU2_U0_Create
-                                  fffe912f       158   func ,g         1
+                                  fffe9061       158   func ,g         1
   _R_MTU2_U0_C0_Start
-                                  fffe9287        11   func ,g         0
+                                  fffe91b9        11   func ,g         0
   _R_MTU2_U0_C0_Stop
-                                  fffe9298         e   func ,g         0
+                                  fffe91ca         e   func ,g         0
 FILE=.\src\r_cg_port.obj
-                                  fffe92a6  fffe92ec        47
+                                  fffe91d8  fffe921e        47
   _R_PORT_Create
-                                  fffe92a6        47   func ,g         1
+                                  fffe91d8        47   func ,g         1
 FILE=.\src\r_cg_port_user.obj
-                                  fffe92ed  fffe93cb        df
+                                  fffe921f  fffe92fd        df
   _LED0_On
-                                  fffe92ed        13   func ,g         0
+                                  fffe921f        13   func ,g         0
   _LED0_Off
-                                  fffe9300        12   func ,g         0
+                                  fffe9232        12   func ,g         0
   _LED0_Toggle
-                                  fffe9312        14   func ,g         3
+                                  fffe9244        14   func ,g         3
   _LED1_On
-                                  fffe9326        12   func ,g         0
+                                  fffe9258        12   func ,g         0
   _LED1_Off
-                                  fffe9338        11   func ,g         0
+                                  fffe926a        11   func ,g         0
   _LED1_Toggle
-                                  fffe9349        13   func ,g         3
+                                  fffe927b        13   func ,g         3
   _LED2_On
-                                  fffe935c        12   func ,g         0
+                                  fffe928e        12   func ,g         0
   _LED2_Off
-                                  fffe936e        12   func ,g         0
+                                  fffe92a0        12   func ,g         0
   _LED2_Toggle
-                                  fffe9380        14   func ,g         3
+                                  fffe92b2        14   func ,g         3
   _LED3_On
-                                  fffe9394        12   func ,g         0
+                                  fffe92c6        12   func ,g         0
   _LED3_Off
-                                  fffe93a6        12   func ,g         0
+                                  fffe92d8        12   func ,g         0
   _LED3_Toggle
-                                  fffe93b8        14   func ,g         3
+                                  fffe92ea        14   func ,g         3
 FILE=.\src\r_cg_s12adb.obj
-                                  fffe93cc  fffe969d       2d2
+                                  fffe92fe  fffe95cf       2d2
   _R_S12ADb_Create
-                                  fffe93cc        f6   func ,g         1
+                                  fffe92fe        f6   func ,g         1
   _R_S12ADb_Start
-                                  fffe94c2        3b   func ,g         0
+                                  fffe93f4        3b   func ,g         0
   _R_S12ADb_Stop
-                                  fffe94fd        3b   func ,g         0
+                                  fffe942f        3b   func ,g         0
   _R_S12ADb_Get_ValueResult
-                                  fffe9538       166   func ,g         0
+                                  fffe946a       166   func ,g         0
 FILE=.\src\r_cg_s12adb_user.obj
-                                  fffe969e  fffe96bb        1e
+                                  fffe95d0  fffe95ed        1e
   _r_s12ad_interrupt
-                                  fffe969e        1e   func ,l         0
+                                  fffe95d0        1e   func ,l         0
 FILE=.\src\r_cg_sbrk.obj
-                                  fffe96bc  fffe9710        55
+                                  fffe95ee  fffe9642        55
   _sbrk
-                                  fffe96bc        55   func ,g         0
+                                  fffe95ee        55   func ,g         0
 FILE=.\src\r_cg_sci.obj
-                                  fffe9711  fffe9985       275
+                                  fffe9643  fffe98b7       275
   _R_SCI5_Create
-                                  fffe9711       10b   func ,g         1
+                                  fffe9643       10b   func ,g         1
   _R_SCI5_Start
-                                  fffe981c        5b   func ,g         1
+                                  fffe974e        5b   func ,g         1
   _R_SCI5_Stop
-                                  fffe9877        91   func ,g         0
+                                  fffe97a9        91   func ,g         0
   _R_SCI5_SPI_Master_Send
-                                  fffe9908        7e   func ,g         1
+                                  fffe983a        7e   func ,g         1
 FILE=.\src\r_cg_sci_user.obj
-                                  fffe9986  fffe9a69        e4
+                                  fffe98b8  fffe999b        e4
   _r_sci5_transmit_interrupt
-                                  fffe9986        72   func ,l         0
+                                  fffe98b8        72   func ,l         0
   _r_sci5_transmitend_interrupt
-                                  fffe99f8        34   func ,l         0
+                                  fffe992a        34   func ,l         0
   _r_sci5_callback_transmitend
-                                  fffe9a2c         d   func ,l         1
+                                  fffe995e         d   func ,l         1
   _sendSPI5
-                                  fffe9a39        24   func ,g         2
+                                  fffe996b        24   func ,g         2
   _sci5_tx_is_busy
-                                  fffe9a5d         d   func ,g         4
+                                  fffe998f         d   func ,g         4
 FILE=.\src\utility.obj
-                                  fffe9a6a  fffe9c0c       1a3
+                                  fffe999c  fffe9b3e       1a3
   _uint16_to_bcd_string
-                                  fffe9a6a        e4   func ,g         0
+                                  fffe999c        e4   func ,g         0
   _uint16_to_string
-                                  fffe9b4e        bf   func ,g         0
+                                  fffe9a80        bf   func ,g         0
 FILE=__initsct
-                                  fffe9c0d  fffe9c56        4a
+                                  fffe9b3f  fffe9b88        4a
   __INITSCT
-                                  fffe9c0d         0   none ,g         1
+                                  fffe9b3f         0   none ,g         1
   loop1
-                                  fffe9c1f         0   none ,l         1
+                                  fffe9b51         0   none ,l         1
   next_loop1
-                                  fffe9c2d         0   none ,l         2
+                                  fffe9b5f         0   none ,l         2
   loop3
-                                  fffe9c3f         0   none ,l         1
+                                  fffe9b71         0   none ,l         1
   next_loop3
-                                  fffe9c50         0   none ,l         2
+                                  fffe9b82         0   none ,l         2
 
 SECTION=$ADDR_C_FFFFFF80
 FILE=.\src\r_cg_vecttbl.obj

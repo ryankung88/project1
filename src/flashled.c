@@ -112,8 +112,9 @@ void Toggle_LED (void)
 *******************************************************************************/
 void Sequence_LED (void)
 {
-     /* Variable used to count down the number of LED flashes */
-    static uint16_t flash_count = 0x10;
+    int count=0;
+	/* Variable used to count down the number of LED flashes */
+    static uint16_t flash_count = 0xFF;
 
     /* Declare a delay count variable */
     uint32_t        ulLed_Delay = 0;
@@ -121,58 +122,31 @@ void Sequence_LED (void)
     /* Flash the LEDs for 200 times or until a user switch is pressed */
     while ((0 == g_switch_flag ) && (--flash_count > 0))
     {
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
-
-        /* Toggles the LEDs after a specific delay. */
+        LED_Delay();
         LED0_Toggle();
 
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
+        LED_Delay();
         LED0_Toggle();
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
 
-        /* Toggles the LEDs after a specific delay. */
+        LED_Delay();
         LED1_Toggle();
 
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
-        LED1_Toggle();        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
+        LED_Delay();
+        LED1_Toggle();
 
-        /* Toggles the LEDs after a specific delay. */
+        LED_Delay();
         LED2_Toggle();
 
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
-        LED2_Toggle();        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
+        LED_Delay();
+        LED2_Toggle();
 
-        /* Toggles the LEDs after a specific delay. */
+        LED_Delay();
         LED3_Toggle();
 
-        for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
-        {
-            /* delay */
-        }
+        LED_Delay();
         LED3_Toggle();
-
-
+        //Display_LCD(2, count);
+        count++;
     }
 
     /* Reset the g_switch_flag flag variable */
@@ -185,4 +159,12 @@ void Sequence_LED (void)
 * End of function Flash_LED
 *******************************************************************************/
 
-
+void LED_Delay(void)
+{
+    /* Declare a delay count variable */
+    uint32_t        ulLed_Delay = 0;
+	for (ulLed_Delay = 0; ulLed_Delay < 100000; ++ulLed_Delay)
+	        {
+	            /* delay */
+	        }
+}

@@ -95,25 +95,16 @@ void R_MAIN_UserInit(void);
 ***********************************************************************************************************************/
 void main(void)
 {
-    int i = 0;
 	R_MAIN_UserInit();
     /* Start user code. Do not edit comment generated here */
 
     /* Display Splash Screen */
-    //Display_LCD(0, (uint8_t *)NAME);
-    //Display_LCD(1, (uint8_t *)CLASS);
     DisplayCenter(0, (uint8_t *)NAME);
     DisplayCenter(1, (uint8_t *)CLASS);
 
-     /* Begins the initial LED flash sequence */
-    //Flash_LED();
-
+    //LED Sequence function
     Sequence_LED();
-    /*for(i = 0; i < 100000; i++)
-    {
-    Toggle_LED();
-    }
-    */
+
     /* Start the timer_adc function */
     //timer_adc();
     

@@ -49,6 +49,7 @@ void Flash_LED(void);
 void Toggle_LED(void);
 
 void Sequence_LED(void);
+void LED_Delay(void);
 
 /* End of multiple inclusion prevention macro */
 #endif
