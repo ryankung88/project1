@@ -1,0 +1,263 @@
+/***********************************************************************************************************************
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only 
+* intended for use with Renesas products. No other uses are authorized. This 
+* software is owned by Renesas Electronics Corporation and is protected under 
+* all applicable laws, including copyright laws.
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING 
+* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT 
+* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE 
+* AND NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
+* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS 
+* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE 
+* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR 
+* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE 
+* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software 
+* and to discontinue the availability of this software.  By using this software, 
+* you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+* Copyright (C) 2012 Renesas Electronics Corporation. All rights reserved.
+***********************************************************************************************************************/
+
+/***********************************************************************************************************************
+* File Name    : r_cg_icu_user.c
+* Version      : Applilet4 for RX111 V1.00.00.05 [06 Jun 2013]
+* Device(s)    : R5F51115AxFM
+* Tool-Chain   : CCRX
+* Description  : This file implements device driver for ICU module.
+* Creation Date: 20/06/2013
+***********************************************************************************************************************/
+
+/***********************************************************************************************************************
+Pragma directive
+***********************************************************************************************************************/
+/* Start user code for pragma. Do not edit comment generated here */
+/* End user code. Do not edit comment generated here */
+
+/***********************************************************************************************************************
+Includes
+***********************************************************************************************************************/
+#include "r_cg_macrodriver.h"
+#include "r_cg_icu.h"
+/* Start user code for include. Do not edit comment generated here */
+#include "switch.h"
+#include <string.h>
+#include "r_cg_cmt.h"
+/* End user code. Do not edit comment generated here */
+#include "r_cg_userdefine.h"
+
+/***********************************************************************************************************************
+Global variables and functions
+***********************************************************************************************************************/
+/* Start user code for global. Do not edit comment generated here */
+
+/* The functions in this file are generated using "Application Leading Tool (Applilet)" for e2 studio.
+ * Warnings exist for interrupt handlers. */
+
+static void start_debounce_timer (const uint16_t compare_match);
+volatile uint8_t switchReleaseCallBackFlag = 0U;
+
+/* Switch flag global variable. Switch status bits:
+        b7 : Switch 1 press complete flag*
+        b6 : Switch 2 press complete flag*
+        b5 : Switch 3 press complete flag*
+        b4 : Unused
+        b3 : Switch 1 held-down status flag
+        b2 : Switch 2 held-down status flag
+        b1 : Switch 3 held-down status flag
+        b0 : Unused
+         * Switch press complete flags must be cleared manually */
+
+volatile uint8_t g_switch_flag = 0;
+
+/* Switch standby ready global variable */
+volatile uint8_t g_switch_standby_ready = 1U;
+
+/* End user code. Do not edit comment generated here */
+
+/***********************************************************************************************************************
+* Function Name: r_icu_irq0_interrupt
+* Description  : None
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+#if FAST_INTERRUPT_VECTOR == VECT_ICU_IRQ0
+#pragma interrupt r_icu_irq0_interrupt(vect=VECT(ICU,IRQ0),fint)
+#else
+#pragma interrupt r_icu_irq0_interrupt(vect=VECT(ICU,IRQ0))
+#endif
+static void r_icu_irq0_interrupt(void)
+{
+    /* Start user code. Do not edit comment generated here */
+
+    /* Disable switch 1 interrupts */
+    IEN(ICU, IRQ0) = 0x0;
+
+    /* Check if interrupt was generated by falling edge */
+    if (0x1 == ICU.IRQCR[0].BIT.IRQMD)
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_SHORT);
+
+        /* Set detection direction as rising edge */
+        ICU.IRQCR[0].BIT.IRQMD = 0x2;
+
+        /* Set global switch flag to indicate SW1 is held down */
+        g_switch_flag |= SWITCHHOLD_1;
+    }
+    else
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_LONG);
+
+        /* Set detection direction to falling edge */
+        ICU.IRQCR[0].BIT.IRQMD = 0x1;
+
+        /* Clear SW1 held-down flag bit in switch flag */
+        /* type cast required to remove warning for
+            Implicit conversion: unsigned int to unsigned char*/
+        g_switch_flag &= ((uint8_t)0xF0 | ~SWITCHHOLD_1);
+
+        /* Set global switch flag to indicate SW1 press complete */
+        g_switch_flag |= SWITCHPRESS_1;
+
+        /* Set user callback flag */
+        switchReleaseCallBackFlag = 1U;
+    }
+
+    /* End user code. Do not edit comment generated here */
+}
+/***********************************************************************************************************************
+* Function Name: r_icu_irq1_interrupt
+* Description  : None
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+#if FAST_INTERRUPT_VECTOR == VECT_ICU_IRQ1
+#pragma interrupt r_icu_irq1_interrupt(vect=VECT(ICU,IRQ1),fint)
+#else
+#pragma interrupt r_icu_irq1_interrupt(vect=VECT(ICU,IRQ1))
+#endif
+static void r_icu_irq1_interrupt(void)
+{
+    /* Start user code. Do not edit comment generated here */
+
+    /* Disable switch 2 interrupts */
+    IEN(ICU, IRQ1) = 0x0;
+
+    /* Check if interrupt triggered from falling edge */
+    if (0x1 == ICU.IRQCR[1].BIT.IRQMD)
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_SHORT);
+
+        /* Set detection direction as rising edge */
+        ICU.IRQCR[1].BIT.IRQMD = 0x2;
+
+        /* Set global switch flag to indicate SW2 is held down */
+        g_switch_flag |= SWITCHHOLD_2;
+    }
+    else
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_LONG);
+
+        /* Set detection direction to falling edge */
+        ICU.IRQCR[1].BIT.IRQMD = 0x1;
+
+        /* Clear SW2 held-down flag bit in switch flag */
+        /* type cast required to remove warning for
+            Implicit conversion: unsigned int to unsigned char*/
+        g_switch_flag &= ((uint8_t)0xF0 | ~SWITCHHOLD_2);
+
+        /* Set global switch flag to indicate SW2 press complete */
+        g_switch_flag |= SWITCHPRESS_2;
+
+        /* Set user callback flag */
+        switchReleaseCallBackFlag = 1U;
+    }
+
+    /* End user code. Do not edit comment generated here */
+}
+/***********************************************************************************************************************
+* Function Name: r_icu_irq4_interrupt
+* Description  : None
+* Arguments    : None
+* Return Value : None
+***********************************************************************************************************************/
+#if FAST_INTERRUPT_VECTOR == VECT_ICU_IRQ4
+#pragma interrupt r_icu_irq4_interrupt(vect=VECT(ICU,IRQ4),fint)
+#else
+#pragma interrupt r_icu_irq4_interrupt(vect=VECT(ICU,IRQ4))
+#endif
+static void r_icu_irq4_interrupt(void)
+{
+    /* Start user code. Do not edit comment generated here */
+
+    /* Disable switch 3 interrupts */
+    IEN(ICU, IRQ4) = 0x0;
+
+    /* Check if detection direction is set to falling edge */
+    if (0x1 == ICU.IRQCR[4].BIT.IRQMD)
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_SHORT);
+
+        /* Set detection direction as rising edge */
+        ICU.IRQCR[4].BIT.IRQMD = 0x2;
+
+        /* Set global switch flag to indicate SW3 is held down */
+        g_switch_flag |= SWITCHHOLD_3;
+    }
+    else
+    {
+        /* Start debounce timer */
+        start_debounce_timer(DEBOUNCE_LONG);
+
+        /* Set detection direction to falling edge */
+        ICU.IRQCR[4].BIT.IRQMD = 0x1;
+
+        /* Clear SW3 held-down flag bit in switch flag */
+        /* type cast required to remove warning for
+            Implicit conversion: unsigned int to unsigned char*/
+        g_switch_flag &= ((uint8_t)0xF0 | ~SWITCHHOLD_3);
+
+        /* Set global switch flag to indicate SW1 press complete */
+        g_switch_flag |= SWITCHPRESS_3;
+
+        /* Set user callback flag */
+        switchReleaseCallBackFlag = 1U;
+    }
+
+    /* End user code. Do not edit comment generated here */
+}
+
+/* Start user code for adding. Do not edit comment generated here */
+
+/******************************************************************************
+* Function Name : start_debounce_timer
+* Description   : Function initialises the CMT timer (the first time the
+*                 function is called), and starts the CMT timer to perform
+*                 generate the switch debounce interrupt.
+* Argument      : uint16_t compare_match    : compare match value to trigger
+*                                             *interrupt at.
+* Return value  : none
+******************************************************************************/
+static void start_debounce_timer (const uint16_t compare_match)
+{
+    /* Set compare match to to generate debounce period */
+    CMT0.CMCOR = compare_match;
+
+    /* Reset count to zero */
+    CMT0.CMCNT = 0x0000;
+
+    /* Start timer */
+    R_CMT0_Start();
+}
+/******************************************************************************
+* End of function start_debounce_timer
+******************************************************************************/
+/* End user code. Do not edit comment generated here */

@@ -1,0 +1,73 @@
+/***********************************************************************************************************************
+* DISCLAIMER
+* This software is supplied by Renesas Electronics Corporation and is only 
+* intended for use with Renesas products. No other uses are authorized. This 
+* software is owned by Renesas Electronics Corporation and is protected under 
+* all applicable laws, including copyright laws.
+* THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING 
+* THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT 
+* LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE 
+* AND NON-INFRINGEMENT. ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
+* TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS 
+* ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE 
+* FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR 
+* ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE 
+* BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+* Renesas reserves the right, without notice, to make changes to this software 
+* and to discontinue the availability of this software. By using this software, 
+* you agree to the additional terms and conditions found by accessing the 
+* following link:
+* http://www.renesas.com/disclaimer
+*
+***********************************************************************************************************************/
+/***********************************************************************************************************************
+* Copyright (C) 2013 Renesas Electronics Corporation. All rights reserved.    */ 
+/***********************************************************************************************************************
+* Project       : Tutorial
+* Version       : Application Leading Tool (Applilet) for RX111 V1.00.00.05 [06 Jun 2013]
+* Device(s)     : R5F51115AxFM
+* Tool-Chain    : CCRX
+* H/W Platform  : RSKRX111
+* Note          : Application Leading Tool (Applilet) is used to generate code 
+*                 for this sample program.  The name Applilet is used hereafter.
+*                 The Applilet details and version number are given in the file 
+*                 header for each relevant module.
+* Description  : This is the main tutorial code. This code will call three
+*                functions to demonstrate Port pin control (FlashLEDs),
+*                Interrupt usage (TimerADC) and C variable initialization
+*                (static_test). Code is also included to drive the optional
+*                LCD module      
+* Operation    : 1. The tutorial code initialises the LCD module, and displays
+*                   'Renesas' on the first line of the LCD, and the name of the
+*                   MCU on the second line.
+*
+*                2. The tutorial code calls the Flash_LED function which
+*                   toggles the user LEDs repeatedly and waits in a loop until 
+*                   either a switch is pressed or the LEDs flash 200 times.
+*                    
+*                3. The tutorial then calls the Timer_ADC function which
+*                   configures the ADC unit, and a timer unit to generate 
+*                   periodic interrupts. The timer's period is varied by the
+*                   ADC conversion results. The ADC unit is configured to 
+*                   generate an interrupt after each AD conversion completes 
+*                   and store the result.               
+*
+*                4. The ADC interrupt fetches the ADC result, which is used to 
+*                   set a new timer period. The timer interrupt handler toggles
+*                   the user LEDs. 
+*
+*                5. After calling Timer_ADC and setting up the timer & ADC
+*                   interrupts, the tutorial calls the static_test function
+*                   which runs in parallel to the callback functions in step 4.
+*                   This function displays the string 'STATIC' which is fetched
+*                   from a static variable and is replaced, letter by letter,
+*                   by the string 'TESTTEST'. The LCD then reverts to the
+*                   original display on completion.    
+*
+*                6. After the static_test function completes, the MCU waits in
+*                   an infinite while loop; and is periodically interrupted
+*                   with the callback function in step 4.  
+***********************************************************************************************************************/  
+/***********************************************************************************************************************
+* History      : 21.03.2013 Ver. 1.00 First Release
+***********************************************************************************************************************/

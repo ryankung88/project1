@@ -1,0 +1,99 @@
+*******************************************************************************
+DESCRIPTION     Renesas Starter Kit Project Readme File
+*******************************************************************************
+
+/******************************************************************************
+* History       : 25.06.2013  Ver. 1.00 First Release
+/******************************************************************************
+
+This project can be debugged with e2 studio, CCRX toolchain and E1 Emulator.
+
+The Quick Start Guide supplied with the RSK can be referred to for help in
+connecting to the target. 
+
+Details of the sample project can be found in the file decsiption.txt.
+
+Online Support and Technical Contact Details:
+    Please refer to the contact details in the “Quick Start Guide”.
+
+/*  RSKRX111 - Board Connector Cross-Reference  */
+Device = R5F51115ADFM
+
+********************************************************************************************
+PORT        PIN NAME/               RING                COMMON              RSK
+NUMBER      FUNCTION                BUS PIN             PIN                 Hardware
+********************************************************************************************
+---         VCC                     J1-15               ---                 ---
+                                    J3-6
+
+---         VSS                     J1-14               JA1-2               ---
+                                    J2-8                JA1-4        
+                                    J3-8                JA2-4
+                                                        JA6-24
+
+---         AVCC0                   J4-15               JA1-5               ---
+---         VREFH0                  J4-13               JA1-7               ---
+
+---         AVSS0                   J4-14               JA1-6               ---
+---         VREFL0                  J4-11               ---                 ---
+
+---         EXTAL                   J1-12               JA2-2               ---
+---         XTAL                    J1-11               ---                 ---
+
+---         MD_FINED                J1-6                ---                 E1
+---         RES#                    J1-7                JA2-1               E1
+
+P03         RL78G1C_CTS_DA0         J1-1                JA1-13              Virtual COM
+P05         RL78G1C_RTS_DA1         J4-16               JA1-14              Virtual COM
+
+P14         P14_A-CTS1RTS1          J2-4                JA2-12              ---
+P15         MTIOC0B_A-RXD1_P-RXD1   J2-3                ---                 Virtual COM
+P16         MTIOC3C_A-TXD1_P-TXD1   J2-2                JA2-9               Virtual COM
+P17         MTIOC3A_A-SCK1_P-SCK1   J2-1                JA2-10              ---
+
+P26         USB0VBUSEN              J1-3                ---                 USB Host
+P27         P27                     J1-2                ---                 ---      
+
+P30         A-IRQ0_P-IRQ0           J1-4                JA2-7               SW1
+P31         A-IRQ1_P-IRQ1           J1-5                JA2-9               SW2    
+P32         P32_MTIOC0C             J1-16               JA2-19              ---
+P35         NMIn                    J1-10               JA2-3               ---
+    
+P40         AN000                   J4-12               JA1-9               ADPOT
+P41         AN001                   J4-10               JA1-10              ---
+P42         AN002                   J4-9                JA1-11              ---
+P43         AN003                   J4-8                JA1-12              ---
+P44         P44_AN004               J4-7                JA5-1               PMOD1
+P46         P46_AN006               J4-6                JA5-2               PMOD1
+
+P54         MTIOC4B                 J2-10               JA2-17              LED2
+P55         MTIOC4D                 J2-9                JA2-18, JA2-22      ---
+
+PA0         MTIOC4A                 J3-13               JA2-15              LED1
+PA1         A-SCK5_P-SCK5           J3-12               JA6-10              PMOD1
+PA3         POE0_A-IRQ6_P-IRQ6      J3-11               JA1-23              PMOD1    
+PA4         IRQ5_MTIC5U             J3-10               JA6-14              PMOD1
+PA6         MTIC5V_SDA_CTS5RTS5     J3-9                JA1-25              EEPROM
+
+PB0         MTIC5W_SCL_ADTRG0n      J3-7                JA1-26              EEPROM/SW3-ADTRG
+PB1         LINNSLP                 J3-5                ---                 LIN
+PB3         USB0OVRCURA             J3-4                ---                 USB Host/OTG
+PB5         PB5_MTIOC1B             J3-3                JA2-21              ---
+PB6/PC0     MTIOC3D                 J3-2                JA2-14, JA2-20      LED3
+PB7/PC1     MTIOC3B                 J3-1                JA2-13              LED0
+
+PC2         A-RXD5_P-RXD5           J2-16               JA6-7               PMOD1
+PC3         A-TXD5_P-TXD5           J2-15               JA6-8               PMOD1
+PC4         PC4                     J2-14               ---                 ---
+PC5         RL78G1C_RES_USB0ID      J2-13               ---                 Virtual COM/USB OTG
+PC6         MTCLKA_USB0EXICEN       J2-12               JA2-25              USB OTG
+PC7         PC7_MTCLKB_USB0OVRCURB  J2-11               JA2-26              PMOD1
+
+PE0         IO0_SCK12               J4-3                JA6-11              ---
+PE1         LINTXD_IO1_TXD12        J4-2                JA1-16              LIN
+PE2         LINRXD_IO2_RXD12        J4-1                JA1-17              LIN
+PE3         IO3_MTIOC0A             J3-16               JA1-18              ---    
+PE4         IO4_MTIOC1A_IRQ4        J3-15               JA2-23              SW3-IRQ
+PE5         IO5_MTIOC4C             J3-14               JA2-16              ---
+PE6         IO6_AN014               J4-5                JA5-3               ---
+PE7         IO7_AN015               J4-4                JA5-4               ---
